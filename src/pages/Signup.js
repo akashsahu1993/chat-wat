@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import {signUp} from "../helpers/auth";
+import {signInWithGitHub, signInWithGoogle, signUp} from "../helpers/auth";
 
 export default class SignUp extends Component {
     constructor() {
@@ -12,6 +12,8 @@ export default class SignUp extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.googleSignIn = this.googleSignIn.bind(this);
+        this.githubSignIn = this.githubSignIn.bind(this);
     }
 
     handleChange(event) {
@@ -30,26 +32,56 @@ export default class SignUp extends Component {
         }
     }
 
+    async googleSignIn() {
+        try {
+            await signInWithGoogle()
+        } catch (error) {
+            this.setState({error: error.message})
+        }
+    }
+
+    async githubSignIn() {
+        try {
+            await signInWithGitHub()
+        } catch (error) {
+            this.setState({error: error.message})
+        }
+    }
+
     render() {
         return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
+            <div className="container">
+                <form className="mt-5 py-5 px-5" onSubmit={this.handleSubmit}>
                     <h1>
-                        Sign Up to <Link to='/'>ChatWat</Link>
+                        Sign Up to
+                        <Link className="title ml-2" to='/'>
+                            ChatWat
+                        </Link>
                     </h1>
-                    <p>Fill in the form below to create an account.</p>
-                    <div>
-                        <input placeholder='Email' name='email' type='email' onChange={this.handleChange}
+                    <p className="lead">Fill in the form below to create an account.</p>
+                    <div className="form-group">
+                        <input className="form-control" placeholder='Email' name='email' type='email'
+                               onChange={this.handleChange}
                                value={this.state.email}/>
                     </div>
-                    <div>
-                        <input placeholder='Password' name='password' type='password' onChange={this.handleChange}
+                    <div className="form-group">
+                        <input className="form-control" placeholder='Password' name='password' type='password'
+                               onChange={this.handleChange}
                                value={this.state.password}/>
                     </div>
-                    <div>
-                        {this.state.error ? <p>{this.state.error}</p> : null}
-                        <button type='submit'>Sign Up</button>
+                    <div className="form-group">
+                        {this.state.error ? (
+                            <p className="text-danger">{this.state.error}</p>
+                        ) : null}
+                        <button className="btn btn-primary px-5" type="submit">Sign Up</button>
                     </div>
+                    <p>Or</p>
+                    <button className="btn btn-danger mr-2" onClick={this.googleSignIn} type='button'>
+                        Sign Up with Google
+                    </button>
+                    <button className="btn btn-secondary" type='button' onClick={this.githubSignIn}>
+                        Sign Up with GitHub
+                    </button>
                     <hr/>
                     <p>Already have an account? <Link to='/login'>Login</Link></p>
                 </form>

@@ -50,22 +50,24 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <form
+                    className="mt-5 py-5 px-5"
                     autoComplete="off"
                     onSubmit={this.handleSubmit}
                 >
                     <h1>
                         Login to
-                        <Link to="/">
+                        <Link className="title ml-2" to="/">
                             ChatWat
                         </Link>
                     </h1>
-                    <p>
+                    <p className="lead">
                         Fill in the form below to login to your account.
                     </p>
-                    <div>
+                    <div className="form-group">
                         <input
+                            className="form-control"
                             placeholder="Email"
                             name="email"
                             type="email"
@@ -73,8 +75,9 @@ export default class Login extends Component {
                             value={this.state.email}
                         />
                     </div>
-                    <div>
+                    <div className="form-group">
                         <input
+                            className="form-control"
                             placeholder="Password"
                             name="password"
                             onChange={this.handleChange}
@@ -82,19 +85,19 @@ export default class Login extends Component {
                             type="password"
                         />
                     </div>
-                    <div>
+                    <div className="form-group">
                         {this.state.error ? (
-                            <p>{this.state.error}</p>
+                            <p className="text-danger">{this.state.error}</p>
                         ) : null}
-                        <button type="submit">Login</button>
-                        <p>Or</p>
-                        <button onClick={this.googleSignIn} type='button'>
-                            Sign Up with Google
-                        </button>
-                        <button type='button' onClick={this.githubSignIn}>
-                            Sign Up with GitHub
-                        </button>
+                        <button className="btn btn-primary px-5" type="submit">Login</button>
                     </div>
+                    <p>Or</p>
+                    <button className="btn btn-danger mr-2" onClick={this.googleSignIn} type='button'>
+                        Sign In with Google
+                    </button>
+                    <button className="btn btn-secondary" type='button' onClick={this.githubSignIn}>
+                        Sign In with GitHub
+                    </button>
                     <hr/>
                     <p>
                         Don't have an account? <Link to="/signup">Sign up</Link>

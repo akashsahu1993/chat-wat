@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
-import {
-    Route,
-    BrowserRouter as Router,
-    Switch,
-    Redirect
-} from "react-router-dom";
+import {Route, BrowserRouter, Switch, Redirect} from 'react-router-dom';
 import Home from './pages/Home';
 import Chat from './pages/Chat';
 import Signup from './pages/Signup';
@@ -36,8 +31,8 @@ function PublicRoute({component: Component, authenticated, ...rest}) {
 
 class App extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             authenticated: false,
             loading: true
@@ -61,15 +56,19 @@ class App extends Component {
     }
 
     render() {
-        return this.state.loading === true ? <h2>Loading...</h2> : (
-            <Router>
+        return this.state.loading === true ? (
+            <div className="spinner-border text-success" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+        ) : (
+            <BrowserRouter>
                 <Switch>
-                    <Route exact path='/' Component={Home}/>
-                    <PrivateRoute path='/chat' authenticated={this.state.authenticated} Component={Chat}/>
-                    <PublicRoute path='/signup' authenticated={this.state.authenticated} Component={Signup}/>
-                    <PublicRoute path='/login' authenticated={this.state.authenticated} Component={Login}/>
+                    <Route exact path='/' component={Home}/>
+                    <PrivateRoute path='/chat' authenticated={this.state.authenticated} component={Chat}/>
+                    <PublicRoute path='/signup' authenticated={this.state.authenticated} component={Signup}/>
+                    <PublicRoute path='/login' authenticated={this.state.authenticated} component={Login}/>
                 </Switch>
-            </Router>
+            </BrowserRouter>
         );
     }
 }
